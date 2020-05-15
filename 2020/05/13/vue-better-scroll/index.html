@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="vue," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="第一步 npm安装better-scroll1npm install better-scroll -S  第二步 创建下my-list组件，引入better-scroll实现初始化功能123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue 中使用 better-scroll 实现下拉刷新和上拉加载">
+<meta property="og:url" content="http://yoursite.com/2020/05/13/vue-better-scroll/index.html">
+<meta property="og:site_name" content="我的代码世界">
+<meta property="og:description" content="第一步 npm安装better-scroll1npm install better-scroll -S  第二步 创建下my-list组件，引入better-scroll实现初始化功能123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585">
+<meta property="article:published_time" content="2020-05-13T08:13:53.000Z">
+<meta property="article:modified_time" content="2020-05-15T02:47:29.529Z">
+<meta property="article:author" content="lander.xiong">
+<meta property="article:tag" content="vue">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/05/13/vue-better-scroll/"/>
+
+
+
+
+
+  <title>Vue 中使用 better-scroll 实现下拉刷新和上拉加载 | 我的代码世界</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">我的代码世界</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/13/vue-better-scroll/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lander.xiong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我的代码世界">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Vue 中使用 better-scroll 实现下拉刷新和上拉加载</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-13T16:13:53+08:00">
+                2020-05-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="第一步-npm安装better-scroll"><a href="#第一步-npm安装better-scroll" class="headerlink" title="第一步 npm安装better-scroll"></a>第一步 npm安装better-scroll</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install better-scroll -S</span><br></pre></td></tr></table></figure>
+
+<h4 id="第二步-创建下my-list组件，引入better-scroll实现初始化功能"><a href="#第二步-创建下my-list组件，引入better-scroll实现初始化功能" class="headerlink" title="第二步 创建下my-list组件，引入better-scroll实现初始化功能"></a>第二步 创建下my-list组件，引入better-scroll实现初始化功能</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br></pre></td><td class="code"><pre><span class="line">  &lt;template&gt;</span><br><span class="line">  &lt;div class&#x3D;&quot;my-list&quot; ref&#x3D;&quot;myList&quot;&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;p v-if&#x3D;&quot;dropDown&quot; class&#x3D;&quot;list-refresh&quot;&gt;</span><br><span class="line">        &#123;&#123;loading ? &#39;下拉刷新中...&#39; : &#39;释放即可刷新&#39;&#125;&#125;</span><br><span class="line">      &lt;&#x2F;p&gt;</span><br><span class="line">      &lt;slot&gt;&lt;&#x2F;slot&gt;</span><br><span class="line">      &lt;p class&#x3D;&quot;list-loading&quot; v-if&#x3D;&quot;!dropDown &amp;&amp; loading&quot;&gt;</span><br><span class="line">        加载中，请稍后...</span><br><span class="line">      &lt;&#x2F;p&gt;</span><br><span class="line">      &lt;div class&#x3D;&quot;list-more&quot; v-if&#x3D;&quot;finished&quot;&gt;没有更多了&lt;&#x2F;div&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">import BScroll from &#39;better-scroll&#39;; &#x2F;&#x2F; 引入better-scroll</span><br><span class="line">export default &#123;</span><br><span class="line">  props: &#123;</span><br><span class="line">    &#x2F;&#x2F; 加载状态</span><br><span class="line">    loading: &#123;</span><br><span class="line">      type: Boolean,</span><br><span class="line">      default: false</span><br><span class="line">    &#125;,</span><br><span class="line">    &#x2F;&#x2F; 加载是否结束</span><br><span class="line">    finished: &#123;</span><br><span class="line">      type: Boolean,</span><br><span class="line">      default: false</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  data() &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">      dropDown: false</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  mounted() &#123;</span><br><span class="line">    this.initScroll(); &#x2F;&#x2F; 初始化</span><br><span class="line">  &#125;,</span><br><span class="line">  model: &#123;</span><br><span class="line">    prop: &#39;loading&#39;,</span><br><span class="line">    event: &#39;setLoading&#39;</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    setLoading(status) &#123;</span><br><span class="line">      this.$emit(&#39;setLoading&#39;, status);</span><br><span class="line">    &#125;,</span><br><span class="line">    &#x2F;&#x2F; 重置滚动条件</span><br><span class="line">    refresh() &#123;</span><br><span class="line">      this.scroll.finishPullDown();</span><br><span class="line">      this.scroll.finishPullUp();</span><br><span class="line">      if(this.scroll) &#123;</span><br><span class="line">        setTimeout(() &#x3D;&gt; &#123;</span><br><span class="line">          this.scroll.refresh();</span><br><span class="line">        &#125;, 20)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    initScroll() &#123;</span><br><span class="line">      this.$nextTick(()&#x3D;&gt;&#123;</span><br><span class="line">        if(!this.scroll) &#123;</span><br><span class="line">          this.scroll &#x3D; new BScroll(this.$refs.myList,&#123;</span><br><span class="line">            probeType: 3,     </span><br><span class="line">            click: true,      &#x2F;&#x2F; 配置允许点击事件</span><br><span class="line">            scrollY: true,    &#x2F;&#x2F; 开启纵向滚动</span><br><span class="line">            pullUpLoad: &#123;</span><br><span class="line">              threshold: -30 &#x2F;&#x2F; 上拉距离触发事件</span><br><span class="line">            &#125;,</span><br><span class="line">            pullDownRefresh: &#123;</span><br><span class="line">              threshold: 30, &#x2F;&#x2F; 下拉距离触发事件</span><br><span class="line">              stop: 54 &#x2F;&#x2F; 下拉回弹距离</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;)</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">          this.scroll.refresh()    &#x2F;&#x2F; 重新计算 better-scroll，当 DOM 结构发生变化的时确保滚动效果正常</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        this.scroll.on(&#39;scroll&#39;, (pos) &#x3D;&gt; &#123;</span><br><span class="line">          &#x2F;&#x2F;如果下拉超过50px 就显示下拉刷新的文字</span><br><span class="line">          if(pos.y&gt;30)&#123;</span><br><span class="line">            this.dropDown &#x3D; true</span><br><span class="line">          &#125;else&#123;</span><br><span class="line">            this.dropDown &#x3D; false</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; 下拉刷新</span><br><span class="line">        this.scroll.on(&#39;pullingDown&#39;, () &#x3D;&gt; &#123;</span><br><span class="line">          this.setLoading(true);</span><br><span class="line">          this.$emit(&#39;refresh&#39;, this);</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; 上拉加载</span><br><span class="line">        this.scroll.on(&#39;pullingUp&#39;, () &#x3D;&gt; &#123;</span><br><span class="line">          if(!this.finished) &#123;</span><br><span class="line">            this.setLoading(true);</span><br><span class="line">            setTimeout(() &#x3D;&gt; &#123;</span><br><span class="line">              this.scroll.refresh();</span><br><span class="line">            &#125;, 20)</span><br><span class="line">            this.$emit(&#39;load&#39;, this);</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br><span class="line">&lt;style lang&#x3D;&quot;less&quot; scoped&gt;</span><br><span class="line">  .my-list &#123;</span><br><span class="line">    position: absolute;</span><br><span class="line">    top: 0;</span><br><span class="line">    left: 0;</span><br><span class="line">    right: 0;</span><br><span class="line">    bottom: 0;</span><br><span class="line">    overflow: hidden;</span><br><span class="line">    &gt;div &#123;</span><br><span class="line">      min-height: 50%;</span><br><span class="line">    &#125;</span><br><span class="line">    .list-refresh &#123;</span><br><span class="line">      position: absolute;</span><br><span class="line">      width: 100%;</span><br><span class="line">      text-align: center;</span><br><span class="line">      margin: 0;</span><br><span class="line">      top: -39px;</span><br><span class="line">    &#125;</span><br><span class="line">    .list-loading &#123;</span><br><span class="line">      width: 100%;</span><br><span class="line">      height: 38px;</span><br><span class="line">      margin: 0;</span><br><span class="line">      color: #C0C4CF;</span><br><span class="line">      font-size: 12px;</span><br><span class="line">      display: flex;</span><br><span class="line">      align-items: center;</span><br><span class="line">      justify-content: center;</span><br><span class="line">    &#125;</span><br><span class="line">    .list-more &#123;</span><br><span class="line">      height: 40px;</span><br><span class="line">      color: #C0C4CF;</span><br><span class="line">      font-size: 14px;</span><br><span class="line">      display: flex;</span><br><span class="line">      align-items: center;</span><br><span class="line">      justify-content: center;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;&#x2F;style&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="第三步-在页面中引入my-list组件"><a href="#第三步-在页面中引入my-list组件" class="headerlink" title="第三步 在页面中引入my-list组件"></a>第三步 在页面中引入my-list组件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class&#x3D;&quot;list&quot;&gt;</span><br><span class="line">    &lt;van-nav-bar</span><br><span class="line">      title&#x3D;&quot;下拉和上拉列表&quot;</span><br><span class="line">      left-arrow</span><br><span class="line">      fixed&gt;</span><br><span class="line">      &lt;template #right&gt;</span><br><span class="line">        &lt;div&gt;demo&lt;&#x2F;div&gt;</span><br><span class="line">      &lt;&#x2F;template&gt;</span><br><span class="line">    &lt;&#x2F;van-nav-bar&gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;box&quot;&gt;</span><br><span class="line">      &lt;my-list</span><br><span class="line">        v-model&#x3D;&quot;loading&quot;</span><br><span class="line">        :finished&#x3D;&quot;finished&quot;</span><br><span class="line">        @refresh&#x3D;&quot;refresh&quot;</span><br><span class="line">        @load&#x3D;&quot;load&quot;&gt;</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">          &lt;div v-for&#x3D;&quot;(item, index) in list&quot; :key&#x3D;&quot;index&quot; class&#x3D;&quot;item&quot;&gt;序号 &#123;&#123;index + 1&#125;&#125;&lt;&#x2F;div&gt;</span><br><span class="line">        &lt;&#x2F;div&gt;</span><br><span class="line">      &lt;&#x2F;my-list&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">import MyList from &#39;@&#x2F;components&#x2F;MyList&#39;;</span><br><span class="line">export default &#123;</span><br><span class="line">  components: &#123;</span><br><span class="line">    MyList</span><br><span class="line">  &#125;,</span><br><span class="line">  data() &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">      loading: false,</span><br><span class="line">      refreshing: false,</span><br><span class="line">      finished: false,</span><br><span class="line">      list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    &#x2F;&#x2F; 下拉刷新</span><br><span class="line">    async refresh(e) &#123;</span><br><span class="line">      this.finished &#x3D; false; &#x2F;&#x2F; 是否加载完成</span><br><span class="line">      this.refreshing &#x3D; true; &#x2F;&#x2F; 刷新开始</span><br><span class="line">      await this.getList(1);</span><br><span class="line">      this.loading &#x3D; false;</span><br><span class="line">      this.refreshing &#x3D; false; &#x2F;&#x2F; 刷新结束</span><br><span class="line">      e.refresh(); &#x2F;&#x2F; 初始化滚动组件</span><br><span class="line">    &#125;,</span><br><span class="line">    &#x2F;&#x2F; 上拉加载</span><br><span class="line">    async load(e) &#123;</span><br><span class="line">      await this.getList();</span><br><span class="line">      this.loading &#x3D; false;</span><br><span class="line">      e.refresh(); &#x2F;&#x2F; 初始化滚动组件</span><br><span class="line">    &#125;,</span><br><span class="line">    &#x2F;&#x2F; 获取数据</span><br><span class="line">    getList(status) &#123;</span><br><span class="line">      return new Promise((resolve, reject) &#x3D;&gt; &#123;</span><br><span class="line">        setTimeout(() &#x3D;&gt; &#123;</span><br><span class="line">          if(status) this.list &#x3D; [];</span><br><span class="line"></span><br><span class="line">          for (let i &#x3D; 0; i &lt; 10; i++) &#123;</span><br><span class="line">            this.list.push(this.list.length + 1);</span><br><span class="line">          &#125;</span><br><span class="line"></span><br><span class="line">          if (this.list.length &gt;&#x3D; 40) &#123;</span><br><span class="line">            this.finished &#x3D; true; &#x2F;&#x2F; 所有数据加载完成</span><br><span class="line">          &#125;</span><br><span class="line">          resolve(&#39;成功&#39;)</span><br><span class="line">        &#125;, 1000)</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br><span class="line">&lt;style lang&#x3D;&quot;less&quot; scoped&gt;</span><br><span class="line">  .list &#123;</span><br><span class="line">    height: 100%;</span><br><span class="line">    display: flex;</span><br><span class="line">    flex-direction: column;</span><br><span class="line">    .box &#123;</span><br><span class="line">      position: absolute;</span><br><span class="line">      top: 45px;</span><br><span class="line">      bottom: 0;</span><br><span class="line">      left: 0;</span><br><span class="line">      right: 0;</span><br><span class="line">      .item &#123;</span><br><span class="line">        height: 80px;</span><br><span class="line">        background-color: #fff;</span><br><span class="line">        display: flex;</span><br><span class="line">        align-items: center;</span><br><span class="line">        justify-content: center;</span><br><span class="line">        margin-bottom: 20px;</span><br><span class="line">        &amp;:nth-last-of-type(1) &#123;</span><br><span class="line">          margin-bottom: 0px;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;&#x2F;style&gt;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="lander.xiong 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/vue/" rel="tag"># vue</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/05/13/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpeg"
+                alt="lander.xiong" />
+            
+              <p class="site-author-name" itemprop="name">lander.xiong</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#第一步-npm安装better-scroll"><span class="nav-number">1.</span> <span class="nav-text">第一步 npm安装better-scroll</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第二步-创建下my-list组件，引入better-scroll实现初始化功能"><span class="nav-number">2.</span> <span class="nav-text">第二步 创建下my-list组件，引入better-scroll实现初始化功能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第三步-在页面中引入my-list组件"><span class="nav-number">3.</span> <span class="nav-text">第三步 在页面中引入my-list组件</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lander.xiong</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
