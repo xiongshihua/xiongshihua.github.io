@@ -79,14 +79,14 @@
 
 
 
-<meta name="description" content="第一步 npm安装vue-clipboard21npm install vue-clipboard2 -S  第二步 main.js 引入123import VueClipboard from &#39;vue-clipboard2&#39;Vue.use(VueClipboard); 第三步 页面中使用12345678910111213141516171819202122232425&lt;template&amp;g">
+<meta name="description" content="日期格式化1234567891011121314151617181920212223242526&#x2F;** * 时间格式化 * @description &lt; 调用方式timeFormat(new Date(), &#39;yyyy&#x2F;MM&#x2F;dd hh:mm:ss&#39;) &gt; * @param date * @param fmt * @return &amp;#123;*&amp;#125; *&#x2F;export funct">
 <meta property="og:type" content="article">
-<meta property="og:title" content="vue 实现复制文本功能">
-<meta property="og:url" content="http://yoursite.com/2020/05/15/vue-clipboard/index.html">
+<meta property="og:title" content="vue 常用工具和方法">
+<meta property="og:url" content="http://yoursite.com/2020/05/19/vue-utils/index.html">
 <meta property="og:site_name" content="我的代码世界">
-<meta property="og:description" content="第一步 npm安装vue-clipboard21npm install vue-clipboard2 -S  第二步 main.js 引入123import VueClipboard from &#39;vue-clipboard2&#39;Vue.use(VueClipboard); 第三步 页面中使用12345678910111213141516171819202122232425&lt;template&amp;g">
-<meta property="article:published_time" content="2020-05-15T03:05:20.000Z">
-<meta property="article:modified_time" content="2020-05-15T08:32:57.670Z">
+<meta property="og:description" content="日期格式化1234567891011121314151617181920212223242526&#x2F;** * 时间格式化 * @description &lt; 调用方式timeFormat(new Date(), &#39;yyyy&#x2F;MM&#x2F;dd hh:mm:ss&#39;) &gt; * @param date * @param fmt * @return &amp;#123;*&amp;#125; *&#x2F;export funct">
+<meta property="article:published_time" content="2020-05-19T08:02:00.000Z">
+<meta property="article:modified_time" content="2020-05-19T08:16:43.204Z">
 <meta property="article:author" content="lander.xiong">
 <meta property="article:tag" content="vue">
 <meta name="twitter:card" content="summary">
@@ -119,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/05/15/vue-clipboard/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/05/19/vue-utils/"/>
 
 
 
 
 
-  <title>vue 实现复制文本功能 | 我的代码世界</title>
+  <title>vue 常用工具和方法 | 我的代码世界</title>
   
 
 
@@ -242,7 +242,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/15/vue-clipboard/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/19/vue-utils/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="lander.xiong">
@@ -259,7 +259,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">vue 实现复制文本功能</h1>
+          <h1 class="post-title" itemprop="name headline">vue 常用工具和方法</h1>
         
 
         <div class="post-meta">
@@ -271,8 +271,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-15T11:05:20+08:00">
-                2020-05-15
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-19T16:02:00+08:00">
+                2020-05-19
               </time>
             
 
@@ -331,10 +331,9 @@
       
 
       
-        <h4 id="第一步-npm安装vue-clipboard2"><a href="#第一步-npm安装vue-clipboard2" class="headerlink" title="第一步 npm安装vue-clipboard2"></a>第一步 npm安装vue-clipboard2</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install vue-clipboard2 -S</span><br></pre></td></tr></table></figure>
+        <h4 id="日期格式化"><a href="#日期格式化" class="headerlink" title="日期格式化"></a>日期格式化</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 时间格式化</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description </span>&lt; 调用方式timeFormat(new Date(), 'yyyy/MM/dd hh:mm:ss') &gt;</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="variable">date</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="variable">fmt</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;*&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">timeFormat</span>(<span class="params">date, fmt = <span class="string">'yyyy/MM/dd hh:mm:ss'</span></span>) </span>&#123;</span><br><span class="line">  date = date ? <span class="keyword">new</span> <span class="built_in">Date</span>(date) : <span class="keyword">new</span> <span class="built_in">Date</span>()</span><br><span class="line">  <span class="keyword">let</span> o = &#123;</span><br><span class="line">      <span class="string">'M+'</span>: date.getMonth() + <span class="number">1</span>,</span><br><span class="line">      <span class="string">'d+'</span>: date.getDate(),</span><br><span class="line">      <span class="string">'h+'</span>: date.getHours(),</span><br><span class="line">      <span class="string">'m+'</span>: date.getMinutes(),</span><br><span class="line">      <span class="string">'s+'</span>: date.getSeconds(),</span><br><span class="line">      <span class="string">'q+'</span>: <span class="built_in">Math</span>.floor((date.getMonth() + <span class="number">3</span>) / <span class="number">3</span>),</span><br><span class="line">      <span class="string">'S'</span>: date.getMilliseconds()</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">if</span> (<span class="regexp">/(y+)/</span>.test(fmt)) fmt = fmt.replace(<span class="built_in">RegExp</span>.$<span class="number">1</span>, (date.getFullYear() + <span class="string">''</span>).substr(<span class="number">4</span> - <span class="built_in">RegExp</span>.$<span class="number">1.</span>length));</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> k <span class="keyword">in</span> o) &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">'('</span> + k + <span class="string">')'</span>).test(fmt)) &#123;</span><br><span class="line">          fmt = fmt.replace(<span class="built_in">RegExp</span>.$<span class="number">1</span>, (<span class="built_in">RegExp</span>.$<span class="number">1.</span>length === <span class="number">1</span>) ? (o[k]) : ((<span class="string">'00'</span> + o[k]).substr((<span class="string">''</span> + o[k]).length)));</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> fmt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h4 id="第二步-main-js-引入"><a href="#第二步-main-js-引入" class="headerlink" title="第二步 main.js 引入"></a>第二步 main.js 引入</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> VueClipboard <span class="keyword">from</span> <span class="string">'vue-clipboard2'</span></span><br><span class="line"></span><br><span class="line">Vue.use(VueClipboard);</span><br></pre></td></tr></table></figure>
-<h4 id="第三步-页面中使用"><a href="#第三步-页面中使用" class="headerlink" title="第三步 页面中使用"></a>第三步 页面中使用</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;a</span><br><span class="line">    v-clipboard:copy=<span class="string">"copyContent"</span></span><br><span class="line">    v-clipboard:success=<span class="string">"onSuccess"</span></span><br><span class="line">    v-clipboard:error=<span class="string">"onError"</span></span><br><span class="line">    href=<span class="string">"javascript:void(0)"</span>&gt;复制&lt;<span class="regexp">/a&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">  <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    data() &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">        copyContent: <span class="string">'我是复制的内容'</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    methods: &#123;</span><br><span class="line">      onSuccess() &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'复制成功'</span>)</span><br><span class="line">      &#125;,</span><br><span class="line">      onError() &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'复制失败'</span>)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="获取日期的星期"><a href="#获取日期的星期" class="headerlink" title="获取日期的星期"></a>获取日期的星期</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取日期的星期</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description </span>&lt; 调用方式getWeek('时间戳') &gt;</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="variable">date</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param </span>type 0 星期 1 周</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="variable">day</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">getWeek</span>(<span class="params">date, type = <span class="number">0</span></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> date = date ? <span class="keyword">new</span> <span class="built_in">Date</span>(date) : <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">    <span class="keyword">let</span> day = date.getDay();</span><br><span class="line">    <span class="keyword">switch</span> (day) &#123;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">        day = type == <span class="number">1</span> ? <span class="string">'周一'</span> : <span class="string">'星期一'</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">        day = type == <span class="number">1</span> ? <span class="string">'周二'</span> : <span class="string">'星期二'</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">        day = type == <span class="number">1</span> ? <span class="string">'周三'</span> : <span class="string">'星期三'</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">4</span>:</span><br><span class="line">        day = type == <span class="number">1</span> ? <span class="string">'周四'</span> : <span class="string">'星期四'</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">5</span>:</span><br><span class="line">        day = type == <span class="number">1</span> ? <span class="string">'周五'</span> : <span class="string">'星期五'</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">6</span>:</span><br><span class="line">        day = type == <span class="number">1</span> ? <span class="string">'周六'</span> : <span class="string">'星期六'</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">        day = type == <span class="number">1</span> ? <span class="string">'周日'</span> : <span class="string">'星期日'</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> day</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -388,8 +387,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/05/13/vue-better-scroll/" rel="next" title="Vue 中使用 better-scroll 实现下拉刷新和上拉加载">
-                <i class="fa fa-chevron-left"></i> Vue 中使用 better-scroll 实现下拉刷新和上拉加载
+              <a href="/2020/05/15/vue-clipboard/" rel="next" title="vue 实现复制文本功能">
+                <i class="fa fa-chevron-left"></i> vue 实现复制文本功能
               </a>
             
           </div>
@@ -398,8 +397,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/05/19/vue-utils/" rel="prev" title="vue 常用工具和方法">
-                vue 常用工具和方法 <i class="fa fa-chevron-right"></i>
+              <a href="/2020/05/19/git-command/" rel="prev" title="git 常用命令">
+                git 常用命令 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -536,7 +535,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#第一步-npm安装vue-clipboard2"><span class="nav-number">1.</span> <span class="nav-text">第一步 npm安装vue-clipboard2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第二步-main-js-引入"><span class="nav-number">2.</span> <span class="nav-text">第二步 main.js 引入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第三步-页面中使用"><span class="nav-number">3.</span> <span class="nav-text">第三步 页面中使用</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#日期格式化"><span class="nav-number">1.</span> <span class="nav-text">日期格式化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取日期的星期"><span class="nav-number">2.</span> <span class="nav-text">获取日期的星期</span></a></li></ol></div>
             
 
           </div>
